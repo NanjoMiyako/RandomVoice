@@ -29,5 +29,6 @@ async function RandomSpeech(utterSpanTime, voiceKindCount){
 }
 
 function cancel(){
+ speechSynthesis.cancel(currentSpeech)
  speechContinueFlg = false
 }
