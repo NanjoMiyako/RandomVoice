@@ -9,6 +9,7 @@ function Execute(){
   var voiceSpanTime = parseInt(document.getElementById("voiceSpanTime").value);
   var voiceKindCount = parseInt(document.getElementById("voiceKindCount").value);
   var text = document.getElementById("text1").value;
+  speechContinueFlg = true
   RandomSpeech(voiceSpanTime, voiceKindCount)
 }
 
