@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
+<title>ランダム音声</title>
+<link rel="stylesheet" href="style2.css">
+</head>
+<body>
+<script src="jquery-3.3.1.min.js"></script>
+
+<div>
+発話間隔:<input type="text" id="voiceSpanTime">秒<br>
+ランダム音声種類数:上位<input type="text" id="voiceKindCount">個<br>
+音声1<input type="text" id="text1"><br>
+音声2<input type="text" id="text2"><br>
+音声3<input type="text" id="text3"><br>
+音声4<input type="text" id="text4"><br>
+音声5<input type="text" id="text5"><br>
+音声6<input type="text" id="text6"><br>
+音声7<input type="text" id="text7"><br>
+音声8<input type="text" id="text8"><br>
+音声9<input type="text" id="text9"><br>
+音声10<input type="text" id="text10"><br>
+
+<br>
+<button onclick="Execute()">ランダム読み上げ開始</button><br>
+<button onclick="cancel()">停止</button><br>
+
+</div>
+
+
+
+
+<script>
+var currentSpeech = null;
+var speechContinueFlg = true;
+
+function Execute(){
+  if(currentSpeech != null){
+  	speechSynthesis.cancel(currentSpeech);
+  } 
+  
+  var voiceSpanTime = parseInt(document.getElementById("voiceSpanTime").value);
+  var voiceKindCount = parseInt(document.getElementById("voiceKindCount").value);
+  var text = document.getElementById("text1").value;
+  RandomSpeech(voiceSpanTime, voiceKindCount)
+}
+
+
+async function RandomSpeech(utterSpanTime, voiceKindCount){
+
+	var random1 = Math.ceil( Math.random()*voiceKindCount);
+	idStr = "text" + random1
+	text = document.getElementById(idStr).value
+	currentSpeech = new SpeechSynthesisUtterance(text)
+	speechSynthesis.speak(currentSpeech)
+	
+	if(speechContinueFlg == true){
+		await new Promise(resolve => setTimeout(resolve, utterSpanTime * 1000))
+		RandomSpeech(utterSpanTime, voiceKindCount)
+	}
+
+}
+
+function cancel(){
+ speechContinueFlg = false
+}
+
+</script>
+
+
+</body>
+</html>
